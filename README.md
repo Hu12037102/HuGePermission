@@ -39,5 +39,16 @@ requestPermission(new OnPermissionsResult() {
                 Manifest.permission.CAMERA,
                 Manifest.permission.CALL_PHONE,
                 Manifest.permission.SEND_SMS
-                });
-                ```
+                });```
+                ###使用依赖
+             
+                allprojects {
+		repositories {
+			...
+			maven { url 'https://jitpack.io' }
+		}
+	}
+            dependencies {
+	        compile 'com.github.Hu12037102:HuGePermission:1.0.0'
+	}
+            
