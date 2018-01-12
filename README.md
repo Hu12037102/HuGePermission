@@ -4,7 +4,7 @@
 ## 使用方法很简单，一行代码
 </br>1、使用运行时权限的Activity extend PermissionActivity
 </br>2、重写requestPermission(String...permission)方法
-	###使用依赖
+	### 使用依赖
              
                 allprojects {
 		repositories {
