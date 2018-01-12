@@ -39,8 +39,9 @@ requestPermission(new OnPermissionsResult() {
                 Manifest.permission.CAMERA,
                 Manifest.permission.CALL_PHONE,
                 Manifest.permission.SEND_SMS
-                });```
-                ###使用依赖
+                });
+		```
+		###使用依赖
              
                 allprojects {
 		repositories {
