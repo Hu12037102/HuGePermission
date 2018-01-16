@@ -12,11 +12,9 @@ import java.util.List;
 
 public class MainActivity extends PermissionActivity {
 
-    @SuppressLint("InlinedApi")
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+    protected void onResume() {
+        super.onResume();
         requestPermission(new OnPermissionsResult() {
             @Override
             public void onAllow(List<String> permissions) {
@@ -51,6 +49,14 @@ public class MainActivity extends PermissionActivity {
                 Manifest.permission.CAMERA,
                 Manifest.permission.CALL_PHONE,
                 Manifest.permission.SEND_SMS
-                });
+        });
+    }
+
+    @SuppressLint("InlinedApi")
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
     }
 }

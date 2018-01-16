@@ -4,16 +4,13 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.baixiaohu.permission.imp.OnPermissionsResult;
 
@@ -23,38 +20,37 @@ import java.util.List;
 
 /**
  * 项  目 :  PermissionUtils
- * 包  名 :  com.baixiaohu.permissionutils
- * 类  名 :  PermissionActivity
+ * 包  名 :  com.baixiaohu.permission
+ * 类  名 :  PermissionFragment
  * 作  者 :  胡庆岭
- * 时  间 :  2018/1/11 0011 下午 12:05
+ * 时  间 :  2018/1/15 0015 上午 9:51
  * 描  述 :  ${TODO}
  *
  * @author ：
  */
 
-public class PermissionActivity extends AppCompatActivity {
-    private AlertDialog mForbidDialog;
-    private static final int REQUEST_CODE = 100;
+public class PermissionFragment extends Fragment {
+    private static final int REQUEST_CODE = 200;
     private static List<String> mAllowList = new ArrayList<>();
     private static List<String> mNoAllowList = new ArrayList<>();
     private static List<String> mForbidList = new ArrayList<>();
     private OnPermissionsResult mOnPermissionsResult;
+    private AlertDialog mForbidDialog;
     private String[] mPermissions;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void onResume() {
+        super.onResume();
     }
 
-
     protected void requestPermission(@NonNull OnPermissionsResult onPermissionsResult, @NonNull String... permissions) {
-        this.mOnPermissionsResult = onPermissionsResult;
         this.mPermissions = permissions;
+        this.mOnPermissionsResult = onPermissionsResult;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            ActivityCompat.requestPermissions(this, permissions, REQUEST_CODE);
-           /* int flag = 0;
-            for (String permission : permissions) {
-                if (ActivityCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_GRANTED) {
+            //  int flag = 0;
+            requestPermissions(permissions, REQUEST_CODE);
+           /* for (String permission : permissions) {
+                if (ActivityCompat.checkSelfPermission(getActivity(), permission) == PackageManager.PERMISSION_GRANTED) {
                     flag++;
                 }
             }
@@ -74,14 +70,13 @@ public class PermissionActivity extends AppCompatActivity {
             case REQUEST_CODE:
                 if (permissions.length == grantResults.length) {
                     clearPermission();
-
                     for (int i = 0; i < grantResults.length; i++) {
 
                         if (grantResults[i] == PackageManager.PERMISSION_GRANTED) {
                             mAllowList.add(permissions[i]);
                         } else {
-                            Log.w("onRequemt--", ActivityCompat.shouldShowRequestPermissionRationale(this, permissions[i]) + "");
-                            if (ActivityCompat.shouldShowRequestPermissionRationale(this, permissions[i])) {
+                            Log.w("onRequemt--", ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), permissions[i]) + "");
+                            if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), permissions[i])) {
                                 mNoAllowList.add(permissions[i]);
                             } else {
                                 mForbidList.add(permissions[i]);
@@ -109,7 +104,6 @@ public class PermissionActivity extends AppCompatActivity {
                             }
                         }
                     }
-
                 }
                 break;
             default:
@@ -124,14 +118,14 @@ public class PermissionActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onDestroy() {
+    public void onDestroy() {
         super.onDestroy();
         clearPermission();
     }
 
     protected void showForbidPermissionDialog(@NonNull String name) {
         if (mForbidDialog == null) {
-            mForbidDialog = new AlertDialog.Builder(this).setTitle("需要获取" + name + "权限")
+            mForbidDialog = new AlertDialog.Builder(getActivity()).setTitle("需要获取" + name + "权限")
                     .setMessage("需要获取" + name + "权限，否则无法正常使用功能；设置路径：设置-应用-易直帮-权限")
                     .setPositiveButton("确定", null)
                     .setNegativeButton("取消", null)
@@ -144,7 +138,7 @@ public class PermissionActivity extends AppCompatActivity {
                     positionButton.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            IntentUtils.openActivityApplyCenter(PermissionActivity.this);
+                            IntentUtils.openFragmentApplyCenter(PermissionFragment.this, getActivity());
 
                         }
                     });
@@ -153,7 +147,7 @@ public class PermissionActivity extends AppCompatActivity {
                         public void onClick(View v) {
 
                             mForbidDialog.dismiss();
-                            finish();
+                            getActivity().finish();
                         }
                     });
 
@@ -163,13 +157,40 @@ public class PermissionActivity extends AppCompatActivity {
         } else if (!mForbidDialog.isShowing()) {
             mForbidDialog.show();
         }
+
+
+        /*mForbidDialog = new TipsDialog(getActivity(), R.layout.dialog_tips_3);
+        mForbidDialog.setContentTitle("需要获取" + name + "权限");
+        mForbidDialog.setTwoContent("需要获取" + name + "权限，否则无法正常使用功能；设置路径：设置-应用-易直帮-权限");
+        mForbidDialog.setContentViewIsVisibility(false);
+        mForbidDialog.setConfirmText("去设置");
+        mForbidDialog.setCancelText(R.string.app_no);
+        mForbidDialog.setContentTitleVisibility(View.VISIBLE);
+        mForbidDialog.setCancelable(false);
+        mForbidDialog.show();
+
+        mForbidDialog.setOnConfirmListener(new TipsDialog.OnConfirmListener() {
+            @Override
+            public void onConfirm() {
+                IntentUtils.openApplyCenter(getActivity());
+            }
+        });
+        mForbidDialog.setOnCancelListener(new TipsDialog.OnCancelListener() {
+            @Override
+            public void onCancel() {
+                mForbidDialog.dismiss();
+                getActivity().finish();
+            }
+        });*/
     }
+
 
     protected void dismissForbidPermissionDialog() {
         if (mForbidDialog != null && mForbidDialog.isShowing()) {
             mForbidDialog.dismiss();
         }
     }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
