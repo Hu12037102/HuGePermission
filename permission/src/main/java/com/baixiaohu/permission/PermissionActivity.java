@@ -48,23 +48,27 @@ public class PermissionActivity extends AppCompatActivity {
 
 
     protected void requestPermission(@NonNull OnPermissionsResult onPermissionsResult, @NonNull String... permissions) {
-        this.mOnPermissionsResult = onPermissionsResult;
         this.mPermissions = permissions;
+        this.mOnPermissionsResult = onPermissionsResult;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            ActivityCompat.requestPermissions(this, permissions, REQUEST_CODE);
-           /* int flag = 0;
+            List<String> requestList = new ArrayList<>();
             for (String permission : permissions) {
-                if (ActivityCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_GRANTED) {
-                    flag++;
+                if (ActivityCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
+                    requestList.add(permission);
                 }
             }
-            if (flag == permissions.length) {
-                mAllowList.clear();
-                mOnPermissionsResult.onAllow(Arrays.asList(permissions));
-            }*/
+            if (requestList.size() > 0) {
+                ActivityCompat.requestPermissions(this, permissions, REQUEST_CODE);
+            } else {
+                if (mOnPermissionsResult != null ) {
+                    mOnPermissionsResult.onAllow(Arrays.asList(permissions));
+                }
+            }
         } else {
             mOnPermissionsResult.onLowVersion();
         }
+
+
     }
 
     @Override

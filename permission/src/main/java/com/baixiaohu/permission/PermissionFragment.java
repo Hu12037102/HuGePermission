@@ -47,17 +47,19 @@ public class PermissionFragment extends Fragment {
         this.mPermissions = permissions;
         this.mOnPermissionsResult = onPermissionsResult;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            //  int flag = 0;
-            requestPermissions(permissions, REQUEST_CODE);
-           /* for (String permission : permissions) {
-                if (ActivityCompat.checkSelfPermission(getActivity(), permission) == PackageManager.PERMISSION_GRANTED) {
-                    flag++;
+            List<String> requestList = new ArrayList<>();
+            for (String permission : permissions) {
+                if (ActivityCompat.checkSelfPermission(getActivity(), permission) != PackageManager.PERMISSION_GRANTED) {
+                    requestList.add(permission);
                 }
             }
-            if (flag == permissions.length) {
-                mAllowList.clear();
-                mOnPermissionsResult.onAllow(Arrays.asList(permissions));
-            }*/
+            if (requestList.size() > 0) {
+                this.requestPermissions(permissions, REQUEST_CODE);
+            } else {
+                if (mOnPermissionsResult != null) {
+                    mOnPermissionsResult.onAllow(Arrays.asList(permissions));
+                }
+            }
         } else {
             mOnPermissionsResult.onLowVersion();
         }
