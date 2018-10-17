@@ -1,6 +1,11 @@
 # HuGePermission
 一个超级强大的运行时权限工具类，一行代码解决运行时权限
 ## Github上一些针对于运行时权限处理，单个权限都还好，但是多个权限，我感觉不是特别的完美！不能满足我的业务！所以自己动手封装了一个！
+</br>不多BB，直接上效果图
+## 全部允许权限
+[!animation](./allow.gif)
+## 部分拒绝和部分永久禁止
+[!animation](./no_allow.gif)
 ## 使用方法很简单，一行代码
 </br>1、	Activity中使用运行时权限的Activity extend PermissionActivity；Fragment中使用运行时权限 Fragment extend PermissionFragment
 </br>2、重写requestPermission(String...permission)方法
