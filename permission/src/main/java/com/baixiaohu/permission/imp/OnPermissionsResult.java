@@ -20,5 +20,4 @@ public interface OnPermissionsResult {
 
     void onForbid(List<String> noForbidPermissions);
 
-    void onLowVersion();
 }

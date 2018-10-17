@@ -1,9 +1,11 @@
 package com.baixiaohu.permissionutils;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
 
 import com.baixiaohu.permission.PermissionActivity;
 import com.baixiaohu.permission.imp.OnPermissionsResult;
@@ -12,38 +14,46 @@ import java.util.List;
 
 public class MainActivity extends PermissionActivity {
 
-    @Override
-    protected void onResume() {
-        super.onResume();
+    private Button mBtnRP;
 
-    }
 
-    @SuppressLint("InlinedApi")
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        initView();
+
+    }
+
+    private void initView() {
+        mBtnRP = findViewById(R.id.btn_request_permission);
+        mBtnRP.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                requestPermission();
+            }
+        });
+    }
+
+    private void requestPermission() {
         requestPermission(new OnPermissionsResult() {
-            @Override
-            public void onAllow(List<String> permissions) {
-                Log.w("requestPermission--","全部同意");
-            }
+                              @Override
+                              public void onAllow(List<String> permissions) {
+                                  Toast.makeText(MainActivity.this,"申请权限成功!",Toast.LENGTH_SHORT).show();
+                              }
 
-            @Override
-            public void onNoAllow(List<String> permissions) {
-                Log.w("requestPermission--","全部不同意");
-            }
+                              @Override
+                              public void onNoAllow(List<String> permissions) {
+                                  Toast.makeText(MainActivity.this,"部分权限申请失败，请重新申请",Toast.LENGTH_SHORT).show();
+                              }
 
-            @Override
-            public void onForbid(List<String> permissions) {
-                Log.w("requestPermission--","有被禁止");
-            }
+                              @Override
+                              public void onForbid(List<String> permissions) {
+                                  showForbidPermissionDialog();
 
-            @Override
-            public void onLowVersion() {
-                Log.w("requestPermission--","我是低版本");
-            }
-        }, new String[]{
+                              }
+
+                          },
                 Manifest.permission.ACCESS_FINE_LOCATION,
                 Manifest.permission.ACCESS_COARSE_LOCATION,
                 Manifest.permission.ACCESS_FINE_LOCATION,
@@ -56,7 +66,6 @@ public class MainActivity extends PermissionActivity {
                 Manifest.permission.RECORD_AUDIO,
                 Manifest.permission.CAMERA,
                 Manifest.permission.CALL_PHONE,
-                Manifest.permission.SEND_SMS
-        });
+                Manifest.permission.SEND_SMS);
     }
 }

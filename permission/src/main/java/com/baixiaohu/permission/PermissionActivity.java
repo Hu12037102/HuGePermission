@@ -35,9 +35,9 @@ import java.util.List;
 public class PermissionActivity extends AppCompatActivity {
     private AlertDialog mForbidDialog;
     private static final int REQUEST_CODE = 100;
-    private static List<String> mAllowList = new ArrayList<>();
-    private static List<String> mNoAllowList = new ArrayList<>();
-    private static List<String> mForbidList = new ArrayList<>();
+    private  List<String> mAllowList = new ArrayList<>();
+    private  List<String> mNoAllowList = new ArrayList<>();
+    private  List<String> mForbidList = new ArrayList<>();
     private OnPermissionsResult mOnPermissionsResult;
     private String[] mPermissions;
 
@@ -65,7 +65,7 @@ public class PermissionActivity extends AppCompatActivity {
                 }
             }
         } else {
-            mOnPermissionsResult.onLowVersion();
+            mOnPermissionsResult.onAllow(Arrays.asList(permissions));
         }
 
 
@@ -133,10 +133,10 @@ public class PermissionActivity extends AppCompatActivity {
         clearPermission();
     }
 
-    protected void showForbidPermissionDialog(@NonNull String name) {
+    protected void showForbidPermissionDialog() {
         if (mForbidDialog == null) {
-            mForbidDialog = new AlertDialog.Builder(this).setTitle("需要获取" + name + "权限")
-                    .setMessage("需要获取" + name + "权限，否则无法正常使用功能；设置路径：设置-应用-易直帮-权限")
+            mForbidDialog = new AlertDialog.Builder(this).setTitle("权限被禁止")
+                    .setMessage("需要获取权限，否则无法正常使用功能；设置路径：设置-应用-HuPermission-权限")
                     .setPositiveButton("确定", null)
                     .setNegativeButton("取消", null)
                     .setCancelable(false).create();
