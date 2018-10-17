@@ -13,7 +13,7 @@
 		}
 	}
             dependencies {
-	        compile 'com.github.Hu12037102:HuGePermission:1.1.0'
+	        implementation 'com.github.Hu12037102:HuGePermission:1.1.0'
 	}
 
 ```java
