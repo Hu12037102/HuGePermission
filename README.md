@@ -23,40 +23,34 @@
 
 ```java
 requestPermission(new OnPermissionsResult() {
-            @Override
-            public void onAllow(List<String> permissions) {
-                Log.w("requestPermission--","全部同意");
-            }
+                              @Override
+                              public void onAllow(List<String> permissions) {
+                                  Toast.makeText(MainActivity.this,"申请权限成功!",Toast.LENGTH_SHORT).show();
+                              }
 
-            @Override
-            public void onNoAllow(List<String> permissions) {
-                Log.w("requestPermission--","全部不同意");
-            }
+                              @Override
+                              public void onNoAllow(List<String> permissions) {
+                                  Toast.makeText(MainActivity.this,"部分权限申请失败，请重新申请",Toast.LENGTH_SHORT).show();
+                              }
 
-            @Override
-            public void onForbid(List<String> permissions) {
-                Log.w("requestPermission--","有被禁止");
-            }
+                              @Override
+                              public void onForbid(List<String> permissions) {
+                                  showForbidPermissionDialog();
 
-            @Override
-            public void onLowVersion() {
-                Log.w("requestPermission--","我是低版本");
-            }
-        }, new String[]{
+                              }
+
+                          },
                 Manifest.permission.ACCESS_FINE_LOCATION,
                 Manifest.permission.ACCESS_COARSE_LOCATION,
-                Manifest.permission.ACCESS_FINE_LOCATION,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE,
                 Manifest.permission.READ_CALENDAR,
-                Manifest.permission.READ_CALL_LOG,
                 Manifest.permission.READ_CONTACTS,
                 Manifest.permission.READ_PHONE_STATE,
                 Manifest.permission.READ_SMS,
                 Manifest.permission.RECORD_AUDIO,
                 Manifest.permission.CAMERA,
                 Manifest.permission.CALL_PHONE,
-                Manifest.permission.SEND_SMS
-                });
+                Manifest.permission.SEND_SMS);
 		```
 	
             
