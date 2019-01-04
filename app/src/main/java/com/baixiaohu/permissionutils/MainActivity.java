@@ -65,5 +65,5 @@ public class MainActivity extends PermissionActivity {
                 Manifest.permission.CAMERA,
                 Manifest.permission.CALL_PHONE,
                 Manifest.permission.SEND_SMS);
-    }
+        }
 }
