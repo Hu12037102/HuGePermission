@@ -7,7 +7,6 @@
 ## 部分拒绝和部分永久禁止
 ![权限部分禁止预览](./no_allow.gif)
 ## 使用方法很简单，一行代码
-## 1.2.0支持AndroidX
 </br>1、	Activity中使用运行时权限的Activity extend PermissionActivity；Fragment中使用运行时权限 Fragment extend PermissionFragment
 </br>2、重写requestPermission(String...permission)方法
 </br>	### 使用依赖
@@ -19,10 +18,10 @@
 		}
 	}
             dependencies {
-	        implementation 'com.github.Hu12037102:HuGePermission:1.2.0'
+	        implementation 'com.github.Hu12037102:HuGePermission:1.2.5'
 	}
 
-```java 
+```java
 requestPermission(new OnPermissionsResult() {
                               @Override
                               public void onAllow(List<String> permissions) {
@@ -51,8 +50,7 @@ requestPermission(new OnPermissionsResult() {
                 Manifest.permission.RECORD_AUDIO,
                 Manifest.permission.CAMERA,
                 Manifest.permission.CALL_PHONE,
-                Manifest.permission.SEND_SMS); 
- java```
-		
+                Manifest.permission.SEND_SMS);
+		```
 	
             
