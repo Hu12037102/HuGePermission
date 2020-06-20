@@ -7,7 +7,7 @@
 ## 部分拒绝和部分永久禁止
 ![权限部分禁止预览](./no_allow.gif)
 ## 使用方法很简单，一行代码
-### 1.2.0支持AndroidX
+## 1.2.0支持AndroidX
 </br>1、	Activity中使用运行时权限的Activity extend PermissionActivity；Fragment中使用运行时权限 Fragment extend PermissionFragment
 </br>2、重写requestPermission(String...permission)方法
 </br>	### 使用依赖
