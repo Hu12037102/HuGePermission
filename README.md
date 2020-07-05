@@ -24,7 +24,7 @@
 	}
 
 ```java 
-```java
+
 requestPermission(new OnPermissionsResult() {
                               @Override
                               public void onAllow(List<String> permissions) {
@@ -53,11 +53,9 @@ requestPermission(new OnPermissionsResult() {
                 Manifest.permission.RECORD_AUDIO,
                 Manifest.permission.CAMERA,
                 Manifest.permission.CALL_PHONE,
-                Manifest.permission.SEND_SMS); 
- java```
-		
-                Manifest.permission.SEND_SMS);
-		```
+                Manifest.permission.SEND_SMS); 		
+               
+		 java```
 	
             
 
